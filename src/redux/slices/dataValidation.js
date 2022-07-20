@@ -3,16 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 const dataValidationSlice = createSlice({
 	name: 'validation',
 	initialState: {
-		isWsLoaded: false,
-		isStreaming: {},
+		isStreaming: false,
 	},
 	reducers: {
 		setIsWsLoaded: (state, action) => {
 			state.isWsLoaded = action.payload
 		},
 		setIsStreaming: (state, action) => {
-			const { field, data } = action.payload
-			state.isStreaming[field] = data
+			state.isStreaming = action.payload
 		},
 	},
 })

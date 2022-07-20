@@ -10,7 +10,6 @@ import { CircularProgress } from '@material-ui/core'
 
 const EnigmaTable = ({ columns, type }) => {
 	const data = useSelector((state) => state.pnlMonitor?.pnlData)
-	console.log(columns, data, type)
 	const memoizedColumns = useMemo(
 		() =>
 			columns?.map((column) => {
@@ -21,12 +20,10 @@ const EnigmaTable = ({ columns, type }) => {
 			}),
 		[columns]
 	)
-	console.log('memoized', memoizedColumns, data)
 	const memoizedRows = useMemo(
 		() =>
 			data &&
 			data.map((row) => {
-				console.log('rows', row)
 				return {
 					...row,
 					name: row.product,
@@ -55,7 +52,6 @@ const EnigmaTable = ({ columns, type }) => {
 					<TableHead>
 						{headerGroups.map((headerGroup) => (
 							<TableRow align={'center'} {...headerGroup.getHeaderGroupProps()}>
-								{console.log(headerGroup)}
 								{headerGroup.headers.map((column) =>
 									shouldRender(column) ? (
 										<TableCell align={'center'} {...column.getHeaderProps(column.getSortByToggleProps())}>

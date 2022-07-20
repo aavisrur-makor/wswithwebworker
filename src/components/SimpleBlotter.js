@@ -10,7 +10,6 @@ export const SimpleBlotter = ({ openTable, tableName, tableType, columns, isWsLo
 	//send to ws
 	useEffect(() => {
 		if (openTable && isWsLoaded) {
-			console.log('Sending event')
 			worker.postMessage({
 				type: 'send_event',
 				message: { type: tableType, data: {} },

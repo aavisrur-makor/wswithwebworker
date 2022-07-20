@@ -14,7 +14,6 @@ function PnlMonitor({ isWsLoaded, tableType }) {
 		isWsLoaded,
 		columns: [{ name: 'product' }, { name: 'daily' }, { name: 'mtd' }, { name: 'ytd' }],
 	}
-	console.log(`RENDERING ${tableType}!`, `Open table ${tableType} ${openTable}`)
 
 	return (
 		<>

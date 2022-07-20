@@ -21,7 +21,7 @@ const GlobalTime = ({ isTimeStreaming }) => {
 		<>
 			{time.timestamp && isTimeStreaming && (
 				<Grid container style={{ width: 'fit-content', height: 60, paddingRight: 10, flexWrap: 'nowrap' }} justifyContent='flex-end'>
-					<Grid item style={{ borderRight: '2px solid #000000', paddingRight: '24px' }}>
+					<Grid item style={{  paddingRight: '24px' }}>
 						<Grid container direction='column' justifyContent='flex-end' style={{ height: '95%' }}>
 							<Grid item>
 								<Typography variant='h3' style={{ color: '#000000', fontWeight: 500, marginBlock: '2' }}>

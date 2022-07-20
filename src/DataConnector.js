@@ -14,33 +14,29 @@ function DataConnector() {
 	const [state, setState] = useState(false)
 
 	webSockerWorker.onmessage = (message) => {
-		console.log('AVIVsss', message)
-		console.log('LISTENING TO MESSAGES')
-		if (message.data.type === 'init') {
+		if (message.data.type === 'ws_status') {
 			dispatch(setIsWsLoaded(message.data))
 		}
 		if (message.data.type === 'isStreming') {
-			dispatch(setIsStreaming({ field: message.data.table, data: message.data.data }))
+			dispatch(setIsStreaming({ field: message.data.table, data: message.data }))
 		}
 		if (message.data.type === 'pnl_monitor') {
-			dispatch(setPnlData(message.data.data.content))
+			dispatch(setPnlData(message.data.content))
 		}
 		if (message.data.type === 'intraday_monitor') {
-			// console.log('intraday dataaaaa', message.data)
-			dispatch(setIntraDayData(message.data.data.content.intraday_monitor_table))
+			dispatch(setIntraDayData(message.data.content.intraday_monitor_table))
 		}
 		if (message.data.type === 'subscription') {
-			dispatch(setClickTradingField({ field: message.data.data.id, data: message.data.data.content }))
+			dispatch(setClickTradingField({ field: message.data.id, data: message.data.content }))
 		}
 		if (message.data.type === 'get_chart') {
-			dispatch(setChartData(message.data.data.content))
+			dispatch(setChartData(message.data.content))
 		}
 		if (message.data.type === 'time') {
-			dispatch(setTime(message.data.data.content))
+			dispatch(setTime(message.data.content))
 		}
 		if (message.data.type === 'trading_activity') {
-			console.log('trading_activity_message', message)
-			dispatch(setSnapshotData(message.data.data))
+			dispatch(setSnapshotData(message.data))
 		}
 	}
 }

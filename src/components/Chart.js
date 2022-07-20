@@ -104,7 +104,6 @@ const ExampleChart = ({ currency }) => {
 		setSortPeriod(newValue)
 	}
 
-	console.log('chart data', data)
 	return (
 		chartData && (
 			<Grid container>

@@ -26,7 +26,6 @@ function DataTable(props) {
   }
 
   const renderVariation = (value) => {
-    console.log('valueeeee', value)
     return (
       <Grid container alignItems='center' justifyContent='flex-end' style={{ minWidth: '60px' }}>
         <Grid item>

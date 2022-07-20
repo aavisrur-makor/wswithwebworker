@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'
 
 function Snapshot(props) {
   const dataFromWS = useSelector((state) => state.snapshot.snapshotData)
-  console.log({ dataFromWS })
   const [isSnapshotActive, setIsSnapshotActive] = useState(false)
 
   useEffect(() => {
@@ -25,7 +24,6 @@ function Snapshot(props) {
         trading_activity_by: 'product',
         format: 'usd',
       }
-      console.log('hereeee')
       worker.postMessage({
         type: 'send_event',
         message: {

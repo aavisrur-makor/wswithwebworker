@@ -15,7 +15,6 @@ function TableComponent({ tableType, columns }) {
 		case 'market_data':
 			break
 		case 'pnl_monitor':
-			console.log('hereeee')
 			return <PnlMonitor type={tableType} columns={columns} />
 		case 'intraday_monitor':
 			return <IntradayMonitor type={tableType} columns={columns} />

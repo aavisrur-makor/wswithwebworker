@@ -6,7 +6,6 @@ import { receiveBlotterData } from '../helperFunctions'
 
 function Clicktrading({ type, currency, isAbleToRender, id }) {
 	const CTPrices = useSelector((state) => state.clickTrading.clickTrading[id])
-	console.log('id', id)
 	return (
 		<>
 			{CTPrices ? (

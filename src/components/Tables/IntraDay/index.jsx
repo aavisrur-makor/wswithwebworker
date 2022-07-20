@@ -19,7 +19,6 @@ const EnigmaTable = ({ columns, type }) => {
 			}),
 		[columns]
 	)
-	console.log('memoized', memoizedColumns)
 	const memoizedRows = useMemo(
 		() =>
 			data?.map((row) => {
@@ -49,7 +48,6 @@ const EnigmaTable = ({ columns, type }) => {
 			<TableHead>
 				{headerGroups.map((headerGroup) => (
 					<TableRow align={'center'} {...headerGroup.getHeaderGroupProps()}>
-						{console.log(headerGroup)}
 						{headerGroup.headers.map((column) =>
 							shouldRender(column) ? (
 								<TableCell align={'center'} {...column.getHeaderProps(column.getSortByToggleProps())}>
