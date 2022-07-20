@@ -13,6 +13,7 @@ const createRootReducer = () =>
 		clickTrading: clickTradingReducer,
 		chart: chartReducer,
 		time: timeReducer,
+		snapshot: snapshotReducer,
 	})
 
 export default createRootReducer

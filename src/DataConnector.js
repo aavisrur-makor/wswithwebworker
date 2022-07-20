@@ -7,6 +7,7 @@ import { setIntraDayData } from './redux/slices/intraday_monitor'
 import { setClickTradingField } from './redux/slices/clickTradingSlice'
 import { setChartData } from './redux/slices/chartSlice'
 import { setTime } from './redux/slices/timeSlice'
+import { setSnapshotData } from './redux/slices/snapshotSlice'
 
 function DataConnector() {
 	const dispatch = useDispatch()
@@ -36,6 +37,10 @@ function DataConnector() {
 		}
 		if (message.data.type === 'time') {
 			dispatch(setTime(message.data.data.content))
+		}
+		if (message.data.type === 'trading_activity') {
+			console.log('trading_activity_message', message)
+			dispatch(setSnapshotData(message.data.data))
 		}
 	}
 }

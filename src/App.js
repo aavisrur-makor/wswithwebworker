@@ -17,6 +17,8 @@ import DataConnector from './DataConnector'
 import Chart from './components/Chart'
 import ChartComponent from './components/ChartComponent'
 import GlobalTime from './components/GlobalTime'
+import Snapshot from './components/Snapshot'
+
 const currencies = [
 	{ name: 'BTC-EUR', id: 'bf5d15d0-415f-11ec-b255-ad01e0712738' },
 	{ name: 'BTC-USD', id: 'bfa88422-1632-427b-bbc7-de104d7ffad5' },
@@ -75,6 +77,9 @@ function App() {
 						return <ChartComponent currency={currency.name} />
 					})}
 					{/* <ChartComponent /> */}
+					<Grid>
+						<Snapshot id={'deb6f71b-d77c-47d9-9fbd-0d69511f8e42'} />
+					</Grid>
 				</Grid>
 			) : (
 				<CircularProgress />
