@@ -7,6 +7,7 @@ import worker from '../Globalworker'
 function CryptoBuy({ currency, id, isOpen }) {
 	useEffect(() => {
 		worker.postMessage({
+			field: currency,
 			type: 'send_event',
 			message: {
 				type: 'subscription',

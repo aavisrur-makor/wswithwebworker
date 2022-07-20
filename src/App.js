@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setPnlData } from './redux/slices/pnl-slice'
 import worker from './Globalworker'
 import DataConnector from './DataConnector'
+import Chart from './components/Chart'
 const currencies = [
 	{ name: 'BTC-USD', id: 'bf5d15d0-415f-11ec-b255-ad01e0712738' },
 	{ name: 'BTC-EUR', id: 'bfa88422-1632-427b-bbc7-de104d7ffad5' },
@@ -61,6 +62,8 @@ function App() {
 							{/* <IntraDay isWsLoaded={isLoaded} /> */}
 						</Grid>
 					</Grid>
+					<Divider style={{ padding: '20px', color: 'black' }}></Divider>
+					<Chart />
 				</Grid>
 			) : (
 				<CircularProgress />

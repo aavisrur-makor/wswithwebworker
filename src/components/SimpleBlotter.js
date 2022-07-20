@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux'
 import { setPnlData } from '../redux/slices/pnl-slice'
 import worker from '../Globalworker'
 export const SimpleBlotter = ({ openTable, tableName, tableType, columns, isWsLoaded }) => {
-	const [dataFromWS, setDataFromWS] = useState(null)
 	const dispatch = useDispatch()
 	//send to ws
 	useEffect(() => {
@@ -20,16 +19,7 @@ export const SimpleBlotter = ({ openTable, tableName, tableType, columns, isWsLo
 	}, [tableType, worker, openTable, isWsLoaded])
 
 	//recieving from worker.
-	useEffect(() => {
-		const receiveBlotterData = (message) => {
-			if (message.data && message.data.type === 'intraday_monitor' && message.data.content) {
-				setDataFromWS(message.data.content.intraday_monitor_table)
-			}
-		}
-		worker.onmessage = (message) => {
-			receiveBlotterData(message)
-		}
-	}, [worker, tableType, openTable])
+
 	return (
 		<Grid container style={{ overflowX: 'auto' }}>
 			<Grid style={{ maxHeight: '500px', width: '100%' }} item xs={12}>

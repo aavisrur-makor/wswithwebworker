@@ -1,21 +1,15 @@
 import { CircularProgress, Grid, Paper, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { getWorker } from '../Globalworker'
 import { receiveBlotterData } from '../helperFunctions'
 
 function Clicktrading({ type, currency, isAbleToRender, id }) {
-	const [dataFromWs, setDataFromWS] = useState(null)
-	// useEffect(() => {
-	// 	worker.onmessage = (message) => {
-	// 		if (message.data.id === id) {
-	// 			setDataFromWS(message.data.content)
-	// 		}
-	// 	}
-// }, [isAbleToRender, currency, id])
+	const CTPrices = useSelector((state) => state.clickTrading.clickTrading[id])
 	console.log('id', id)
 	return (
 		<>
-			{dataFromWs ? (
+			{CTPrices ? (
 				<Grid container>
 					<Paper style={{ border: '1px solid black', width: '400px' }}>
 						<Grid item container xs={12}>
@@ -26,7 +20,7 @@ function Clicktrading({ type, currency, isAbleToRender, id }) {
 								<Typography>Bid</Typography>
 							</Grid>
 							<Grid item xs={6}>
-								<Typography>{dataFromWs[currency].price.bid ? dataFromWs[currency].price.bid.price : 'No data to show'}</Typography>
+								<Typography>{CTPrices[currency].price.bid ? CTPrices[currency].price.bid.price : 'No data to show'}</Typography>
 							</Grid>
 						</Grid>
 						<Grid item container xs={12}>
@@ -34,7 +28,7 @@ function Clicktrading({ type, currency, isAbleToRender, id }) {
 								<Typography>Ask</Typography>
 							</Grid>
 							<Grid item xs={6}>
-								<Typography>{dataFromWs[currency].price.ask ? dataFromWs[currency].price.ask.price : 'No data to show'}</Typography>
+								<Typography>{CTPrices[currency].price.ask ? CTPrices[currency].price.ask.price : 'No data to show'}</Typography>
 							</Grid>
 						</Grid>
 					</Paper>
