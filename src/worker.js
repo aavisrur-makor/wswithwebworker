@@ -1,7 +1,7 @@
 const { default: axios } = require('axios')
 
 let ws = {}
-const tables = ['intraday_monitor', 'pnl_monitor', 'subscription']
+const tables = ['intraday_monitor', 'pnl_monitor', 'subscription', 'get_chart', 'time']
 
 const webSocketInit = (setIsLoaded) => {
 	// let result = await axios.put('https://dev.rest-api.enigma-x.io/auth', {
@@ -22,6 +22,7 @@ const webSocketInit = (setIsLoaded) => {
 		// };
 		ws[table].onopen = () => {
 			console.log(`${table} Websocket connected!`)
+			postMessage({ table: table, type: 'isStreming', data: true })
 		}
 		ws[table].onmessage = (e) => {
 			const data = JSON.parse(e.data)

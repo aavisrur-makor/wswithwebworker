@@ -3,53 +3,29 @@ import { Grid, useTheme, withStyles } from '@material-ui/core'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import Chart from 'react-apexcharts'
 import * as dayjs from 'dayjs'
-
-import { useStyles, StyledChartToggleButtonGroup } from '../../styles/UiTickets'
-
-import workerInstances from '../../services'
-import { ToggleButtonGroup, ToggleButton } from '@mui/material'
-
-const ExampleChart = ({ id, widgetData, isDayChart = true }) => {
+import { ToggleButtonGroup } from '@mui/material'
+import worker from '../Globalworker'
+import { useSelector } from 'react-redux'
+const ExampleChart = ({ currency }) => {
 	const theme = useTheme()
-	const classes = useStyles()
 
 	const [chartData, setChartData] = useState([])
 	const [sortPeriod, setSortPeriod] = useState('1D')
-	const [data, setData] = useState()
 	const [tooltipColor, setTooltipColor] = useState('dark')
+	const data = useSelector((state) => state.chart?.chartData)
 
 	useEffect(() => {
-		if (theme.palette.loans.summaryTxt === '#B7BEBF') {
-			setTooltipColor('light')
-		} else if (theme.palette.loans.summaryTxt === '#9EA6B9') {
-			setTooltipColor('dark')
-		}
-	}, [theme.palette.loans.summaryTxt])
-
-	const settings = widgetData?.setting
-
-	useEffect(() => {
-		if (!workerInstances.WebSocketPricesInstance) return
-
-		workerInstances.WebSocketPricesInstance.sendEvent({
-			type: 'get_chart',
-			data: {
-				product_name: settings?.product?.name,
-				period: sortPeriod,
+		worker.postMessage({
+			type: 'send_event',
+			message: {
+				type: 'get_chart',
+				data: {
+					product_name: currency,
+					period: sortPeriod,
+				},
 			},
 		})
-	}, [workerInstances.WebSocketPricesInstance, sortPeriod])
-
-	useEffect(() => {
-		const getChartData = (message) => {
-			if (message.data.type === 'get_chart' && !message.data.error) {
-				setData(message.data.content)
-			}
-		}
-		workerInstances.WebSocketPricesInstance.addEventListener('message', getChartData)
-		return () => workerInstances.WebSocketPricesInstance.removeEventListener('message', getChartData)
-	}, [workerInstances.WebSocketPricesInstance])
-
+	}, [worker, sortPeriod])
 	const series = [
 		{
 			name: 'candle',
@@ -110,15 +86,16 @@ const ExampleChart = ({ id, widgetData, isDayChart = true }) => {
 	useEffect(() => {
 		const array = []
 
-		data?.map((item) => {
-			let date = new Date(item.time_period_start)
-			const cel = {
-				x: date,
-				y: [item.price_open, item.price_high, item.price_low, item.price_close],
-			}
+		data &&
+			data?.map((item) => {
+				let date = new Date(item.time_period_start)
+				const cel = {
+					x: date,
+					y: [item.price_open, item.price_high, item.price_low, item.price_close],
+				}
 
-			return array.push(cel)
-		})
+				return array.push(cel)
+			})
 
 		setChartData(array)
 	}, [data])
@@ -127,32 +104,21 @@ const ExampleChart = ({ id, widgetData, isDayChart = true }) => {
 		setSortPeriod(newValue)
 	}
 
+	console.log('chart data', data)
 	return (
 		chartData && (
-			<Grid container xs={12} className={classes.chartContainer}>
-				<Grid className={classes.sortPeriodContainer}>
-					<StyledChartToggleButtonGroup value={sortPeriod} onChange={filterByPeriod} exclusive orientation='horizontal' className={classes.sortedByPeriodButtonsContainer}>
-						<ToggleButton value='1D' className={classes.sortedByButton}>
-							1D
-						</ToggleButton>
-						<ToggleButton value='5D' className={classes.sortedByButton}>
-							5D
-						</ToggleButton>
-						<ToggleButton value='1M' className={classes.sortedByButton}>
-							1M
-						</ToggleButton>
-						<ToggleButton value='3M' className={classes.sortedByButton}>
-							3M
-						</ToggleButton>
-						<ToggleButton value='6M' className={classes.sortedByButton}>
-							6M
-						</ToggleButton>
-						<ToggleButton value='YTD' className={classes.sortedByButton}>
-							YTD
-						</ToggleButton>
+			<Grid container>
+				<Grid>
+					<StyledChartToggleButtonGroup value={sortPeriod} onChange={filterByPeriod} exclusive orientation='horizontal'>
+						<ToggleButton value='1D'>1D</ToggleButton>
+						<ToggleButton value='5D'>5D</ToggleButton>
+						<ToggleButton value='1M'>1M</ToggleButton>
+						<ToggleButton value='3M'>3M</ToggleButton>
+						<ToggleButton value='6M'>6M</ToggleButton>
+						<ToggleButton value='YTD'>YTD</ToggleButton>
 					</StyledChartToggleButtonGroup>
 				</Grid>
-				<Chart className={classes.innerChart} options={options} series={series} type='candlestick' />
+				<Chart style={{ width: '100%' }} options={options} series={series} type='candlestick' />
 			</Grid>
 		)
 	)
@@ -167,11 +133,11 @@ export const StyledChartToggleButtonGroup = withStyles((theme) => ({
 			marginRight: '5px',
 		},
 		height: '26px',
-		color: theme.palette.text.main,
-		backgroundColor: theme.palette.table.main,
+		color: '#000000',
+		backgroundColor: '#ffffff',
 		'&.Mui-selected': {
 			color: '#2E81EC',
-			backgroundColor: theme.palette.table.main,
+			backgroundColor: '#ffffff',
 			border: '1px solid #2E81EC',
 		},
 	},
